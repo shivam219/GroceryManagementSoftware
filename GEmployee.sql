@@ -1,0 +1,16 @@
+create table employee (eid int primary key auto_increment,fname varchar(30) not null, lname varchar(30) not null, phone bigint not null unique, password varchar(30)not null) ;
+use world;
+show databases;
+insert into employee (fname, lname ,phone ,password) value('root','root',0123456789,'root');
+insert into employee (fname, lname, phone, password) value('shivam' ,'choudhary',8779750059 ,'shivam123');
+insert into employee (fname, lname, phone, password) value('deepak' ,'choudhary',9082125447 ,'deepak123');
+insert into employee (fname, lname, phone, password) value('suraj' ,'choudhary',8976647743 ,'suraj123');
+select * from employee;
+desc employee;
+select * from employee where eid=1 and password='shivam@219';
+select eid  from employee order by eid desc limit 1;
+alter table employee modify phone integer(12);
+commit;
+drop table employee;
+delete from employee where eid = 1;
+update  employee set name = 'deepak' where id= 1;
