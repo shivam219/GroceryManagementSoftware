@@ -271,7 +271,7 @@ public class Pruduct extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefresh1ActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        billTableModel.setRowCount(0);
+        billTableModel.setRowCount(0);//remove all rows from bill table
         TotalCountOfQuantity = 0;
         TotalPriceOfQuantity = 0;
         mapQty.clear();
@@ -281,27 +281,25 @@ public class Pruduct extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefreshActionPerformed
     private void btnVegitableAddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVegitableAddToCartActionPerformed
         if (!jtfEnterIdVegitable.getText().isBlank() && !jtfEnterQTYVegitable.getText().isBlank()) {
-            int jtfid = 0, jtfQty = 0;
             boolean pidFound = false;
             DefaultTableModel model = (DefaultTableModel) jtableVegitable.getModel();
-            boolean isAllReady = false;
             try {
-                jtfid = Integer.parseInt(jtfEnterIdVegitable.getText());
-                jtfQty = Integer.parseInt(jtfEnterQTYVegitable.getText());
+                int jtfid = Integer.parseInt(jtfEnterIdVegitable.getText());
+                int jtfQty = Integer.parseInt(jtfEnterQTYVegitable.getText());
                 for (int i = 0; i < model.getRowCount(); i++) {
-                    int tid = Integer.parseInt(model.getValueAt(i, 0).toString());
-                    int tQty = Integer.parseInt(model.getValueAt(i, 3).toString());
-                    if (tid == jtfid) {
+                    if (Integer.parseInt(model.getValueAt(i, 0).toString()) == jtfid) {
+                        int tQty = Integer.parseInt(model.getValueAt(i, 3).toString());
                         pidFound = true;
                         if (tQty >= jtfQty) {
                             model.setValueAt(tQty - jtfQty, i, 3);
-                            mapQty.put(tid, tQty - jtfQty);
+                            mapQty.put(jtfid, tQty - jtfQty);
                             String pname = model.getValueAt(i, 1).toString();
                             String pack = model.getValueAt(i, 2).toString();
                             int price = Integer.parseInt(model.getValueAt(i, 4).toString());
                             int totalPrice = jtfQty * price;
+                            boolean isAllReady = false;
                             for (int j = 0; j < billTableModel.getRowCount(); j++) {
-                                if (billTableModel.getValueAt(j, 0).toString().equals(tid + "")) {
+                                if (billTableModel.getValueAt(j, 0).toString().equals(jtfid + "")) {
                                     int Quantity = Integer.parseInt(billTableModel.getValueAt(j, 3).toString()) + jtfQty;
                                     billTableModel.setValueAt(Quantity, j, 3);
                                     billTableModel.setValueAt(price * Quantity, j, 5);
@@ -313,7 +311,7 @@ public class Pruduct extends javax.swing.JFrame {
                                 }
                             }
                             if (!isAllReady) {
-                                billTableModel.addRow(new String[]{tid + "", pname, pack, jtfQty + "", price + "", totalPrice + ""});
+                                billTableModel.addRow(new String[]{jtfid + "", pname, pack, jtfQty + "", price + "", totalPrice + ""});
                                 TotalPriceOfQuantity = TotalPriceOfQuantity + totalPrice;
                                 TotalCountOfQuantity = TotalCountOfQuantity + jtfQty;
                                 isEnterDataToBillTable = true;
@@ -333,7 +331,6 @@ public class Pruduct extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Enter Valid data");
                 jtfEnterQTYVegitable.setText("");
                 jtfEnterIdVegitable.setText("");
-
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please Insert data in Both");
