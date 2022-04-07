@@ -179,7 +179,7 @@ public class Login extends javax.swing.JFrame {
         } else {
             jtfUserID.setText("");
             jtflUserPWD.setText("");
-            JOptionPane.showMessageDialog(this, "Please Enter user id and password perfectly","Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please Enter user id and password perfectly", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnManageLoginActionPerformed
 
@@ -191,14 +191,13 @@ public class Login extends javax.swing.JFrame {
             boolean founded = false;
             try {
                 ResultSet rs = st.executeQuery("select * from employee where eid=" + eid + " and password='" + pass + "'");
-                if (rs != null) {
-                    while (rs.next()) {
-                        int id = rs.getInt(1);
-                        String fullName = rs.getString(2) + "  " + rs.getString(3);
-                        JOptionPane.showMessageDialog(this, "Employee Id " + id + "\nName " + fullName);
-                        founded = true;
-                    }
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    String fullName = rs.getString(2) + "  " + rs.getString(3);
+                    JOptionPane.showMessageDialog(this, "Employee Id " + id + "\nName " + fullName);
+                    founded = true;
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -212,7 +211,7 @@ public class Login extends javax.swing.JFrame {
         } else {
             jtfUserID.setText("");
             jtflUserPWD.setText("");
-            JOptionPane.showMessageDialog(this, "Please Enter user id and password perfectly","Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please Enter user id and password perfectly", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnEmployeeLoginActionPerformed
 
@@ -242,22 +241,23 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfUserIDActionPerformed
     public boolean isValid() {
         try {
-            if ( jtfUserID.getText().isBlank()) {
+            if (jtfUserID.getText().isBlank()) {
                 return false;
-            } else{
+            } else {
                 try {
                     Integer.parseInt(jtfUserID.getText());
                 } catch (Exception e) {
                     return false;
                 }
-            }if (new String(jtflUserPWD.getPassword()).isEmpty() || new String(jtflUserPWD.getPassword()).isBlank()) {
+            }
+            if (new String(jtflUserPWD.getPassword()).isBlank()) {
                 return false;
             }
         } catch (Exception e) {
         }
         return true;
     }
-  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEmployeeLogin;
     private javax.swing.JButton btnManageLogin;
