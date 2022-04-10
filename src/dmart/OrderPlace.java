@@ -17,7 +17,7 @@ public class OrderPlace extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setData(temp, totalAmtOfAllQuantity, OrderId, totalQuantity);
         saveOrderHistory(OrderId, map.size(), totalQuantity, totalAmtOfAllQuantity);
-        updataQuantity(map);
+        updataQuantity(map);// put update quantity to gvegatable
     }
 
     public void updataQuantity(LinkedHashMap<Integer, Integer> map) {

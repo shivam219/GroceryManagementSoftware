@@ -11,6 +11,7 @@ public class AddProductFrame extends javax.swing.JFrame {
 
     Statement st = ConnectionProvider.getStatement();
     ResultSet rs = null;
+    int pid = 0;
     boolean foundedId1 = false, foundedId2 = false;
     int SelectID1 = 0, SelectID2 = 0;
 
@@ -598,9 +599,9 @@ public class AddProductFrame extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))))
+                        .addGap(33, 33, 33))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -615,12 +616,12 @@ public class AddProductFrame extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel5)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(19, 19, 19))
@@ -634,7 +635,7 @@ public class AddProductFrame extends javax.swing.JFrame {
             rs = st.executeQuery("select * from gvegetable order by pid desc limit 1");
             if (rs != null) {
                 while (rs.next()) {
-                    int pid = rs.getInt(1) + 1;
+                    pid = rs.getInt(1) + 1;
                     jlblNewProductID1.setText("New Product ID :  " + pid);
 
                 }
@@ -667,7 +668,7 @@ public class AddProductFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Product pack should be different");
             }
         }
-        if ( !jtfInPPrice.getText().isBlank()) {
+        if (!jtfInPPrice.getText().isBlank()) {
             try {
                 if (jlblShowProductPrice2.getText().equals(jtfInPPrice.getText().trim())) {
                     JOptionPane.showMessageDialog(this, "Product Price should be different");
@@ -845,7 +846,24 @@ public class AddProductFrame extends javax.swing.JFrame {
         jlblProductID2.setText("Product ID : ");
     }
     private void btnAddproduct1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddproduct1ActionPerformed
-        // TODO add your handling code here:
+
+        try {
+            String name = jtfNewProductPack1.getText();
+            String pack = jtfNewProductPack1.getText();
+            int price = Integer.parseInt(jtfNewProductPrice1.getText());
+            int quantity = Integer.parseInt(jtfNewProductUnit1.getText());
+            String query = "insert into Gvegetable (pname,pack,quantity,price) values ('" + name + "','" + pack + "'," + price + "," + quantity + ")";
+            try {
+                st.execute(query);
+                JOptionPane.showMessageDialog(this, "Vegatable added");
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error while Entering");                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Please Enter valid data");
+        }
+
     }//GEN-LAST:event_btnAddproduct1ActionPerformed
 
     private void jtfInPTotalUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfInPTotalUnitActionPerformed
@@ -886,6 +904,7 @@ public class AddProductFrame extends javax.swing.JFrame {
         }
         return true;
     }
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

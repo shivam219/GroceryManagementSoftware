@@ -83,12 +83,6 @@ public class Pruduct extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Enter Quantity >>");
 
-        jtfEnterIdVegitable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfEnterIdVegitableActionPerformed(evt);
-            }
-        });
-
         labelPId.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelPId.setText("Enter product ID >>");
 
@@ -244,10 +238,11 @@ public class Pruduct extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     public void getOrderId() {
         try {
-            rs = st.executeQuery("select * from OrderHistory");//order ID for order history table
+            rs = st.executeQuery("select * from OrderHistory order by oid desc");//order ID for order history table
             if (rs != null) {
                 while (rs.next()) {
                     OrderID = rs.getInt(1) + 1;
+                    break;
                 }
             }
         } catch (SQLException e) {
@@ -362,10 +357,6 @@ public class Pruduct extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnBuyActionPerformed
-
-    private void jtfEnterIdVegitableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfEnterIdVegitableActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfEnterIdVegitableActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuy;

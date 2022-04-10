@@ -12,32 +12,28 @@ public class ViewPointFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setData();
     }
-
+    
     public void setData() {
         DefaultTableModel model = (DefaultTableModel) jtableViewPoint.getModel();
         Statement st = ConnectionProvider.getStatement();
         ResultSet rs = null;
         try {
             rs = st.executeQuery("select * from Gvegetable ");
-            if (rs != null) {
-                while (rs.next()) {
-                    int pid = rs.getInt(1);
-                    String pname = rs.getString(2);
-                    String pack = rs.getString(3);
-                    int quantity = rs.getInt(4);
-                    int price = rs.getInt(5);
-                    String stock = "In Stock";
-                    if (quantity == 0) {
-                        stock = "Out of stock";
-                    }
-                    if (quantity > 0 && quantity <= 10) {
-                        stock = "Stock running low";
-                    }
-                    model.addRow(new String[]{pid + "", pname, pack, price + "", stock, quantity + ""});
+            while (rs.next()) {
+                int pid = rs.getInt(1);
+                String pname = rs.getString(2);
+                String pack = rs.getString(3);
+                int quantity = rs.getInt(4);
+                int price = rs.getInt(5);
+                String stock = "In Stock";
+                if (quantity == 0) {
+                    stock = "Out of stock";
                 }
-
+                if (quantity > 0 && quantity <= 10) {
+                    stock = "Stock running low";
+                }
+                model.addRow(new String[]{pid + "", pname, pack, price + "", stock, quantity + ""});
             }
-         
         } catch (Exception e) {
             e.printStackTrace();
         }
